@@ -17,6 +17,21 @@
           <li><a href="#" class="hover:text-gray-400">服務項目</a></li>
           <li><a href="#" class="hover:text-gray-400">聯絡資訊</a></li>
         </ul>
+        <!-- 行動裝置選單按鈕 -->
+        <button class="md:hidden flex items-center" id="mobile-menu-button" aria-label="開啟選單">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+      <!-- 行動裝置選單 -->
+      <div class="md:hidden hidden bg-gray-700 w-full" id="mobile-menu">
+        <ul class="flex flex-col p-4 space-y-2">
+          <li><a href="#" class="block hover:text-gray-400">首頁</a></li>
+          <li><a href="#" class="block hover:text-gray-400">關於我們</a></li>
+          <li><a href="#" class="block hover:text-gray-400">服務項目</a></li>
+          <li><a href="#" class="block hover:text-gray-400">聯絡資訊</a></li>
+        </ul>
       </div>
     </nav>
 
@@ -116,19 +131,19 @@
         <form class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
           <div class="mb-4">
             <label for="name" class="block font-semibold mb-2">姓名：</label>
-            <input type="text" id="name" class="w-full border-gray-300 rounded px-4 py-2" required />
+            <input type="text" id="name" class="w-full border border-gray-300 rounded px-4 py-2" required />
           </div>
           <div class="mb-4">
             <label for="email" class="block font-semibold mb-2">電子郵件：</label>
-            <input type="email" id="email" class="w-full border-gray-300 rounded px-4 py-2" required />
+            <input type="email" id="email" class="w-full border border-gray-300 rounded px-4 py-2" required />
           </div>
           <div class="mb-4">
             <label for="phone" class="block font-semibold mb-2">電話：</label>
-            <input type="tel" id="phone" class="w-full border-gray-300 rounded px-4 py-2" />
+            <input type="tel" id="phone" class="w-full border border-gray-300 rounded px-4 py-2" />
           </div>
           <div class="mb-4">
             <label for="course" class="block font-semibold mb-2">選擇課程：</label>
-            <select id="course" class="w-full border-gray-300 rounded px-4 py-2">
+            <select id="course" class="w-full border border-gray-300 rounded px-4 py-2">
               <option value="">請選擇課程</option>
               <option value="html">HTML 基礎教學</option>
               <option value="css">CSS 樣式設計</option>
@@ -137,9 +152,10 @@
           </div>
           <div class="mb-4">
             <label for="message" class="block font-semibold mb-2">留言：</label>
-            <textarea id="message" rows="4" class="w-full border-gray-300 rounded px-4 py-2"></textarea>
+            <textarea id="message" rows="4" class="w-full border border-gray-300 rounded px-4 py-2"></textarea>
           </div>
           <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded">送出表單</button>
+          <p class="text-sm text-gray-500 mt-4">* 表示必填欄位</p>
         </form>
       </section>
     </main>
@@ -177,5 +193,60 @@
         <p>&copy; 2024 網頁設計學習中心. All rights reserved.</p>
       </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // 行動裝置選單切換
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      });
+
+      // 表單提交處理
+      document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // 取得表單資料
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const course = document.getElementById('course').value;
+        const message = document.getElementById('message').value;
+        
+        // 在實際應用中，這裡會發送資料到伺服器
+        console.log('表單提交:', { name, email, phone, course, message });
+        
+        // 顯示提交成功訊息
+        alert('表單提交成功！我們會盡快與您聯繫。');
+        
+        // 重置表單
+        this.reset();
+      });
+
+      // 平滑捲動
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80, // 考慮導航列高度
+              behavior: 'smooth'
+            });
+            
+            // 如果行動選單開啟，則關閉它
+            document.getElementById('mobile-menu').classList.add('hidden');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
